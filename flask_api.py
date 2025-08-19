@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, request
 from flask_httpauth import HTTPBasicAuth
 import os
@@ -15,12 +16,17 @@ auth = HTTPBasicAuth()
 
 logs = RespuestaLogs()
 
-@app.route('/api/getInfo', methods=['POST'])
+@app.route('/api/getInfoIp', methods=['POST'])
 def init():
     response = RespuestaProcesos()
     logs.resetLogs()
     try:
-        print("hola")
+        ip = request.json.get('ip', '127.0.0.1')
+        result = requests.get(f"http://ip-api.com/json/{ip}", json=request.json).json()
+        response.result = result
+        response.code = 'COD_OK'
+        response.info = f"Información obtenida para la IP: {ip}"
+        response.status = True
 
     except Exception as e:
         response.code = 'COD_ERR'
