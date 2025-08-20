@@ -1,4 +1,4 @@
-# MCIB_B_G12
+# MCIB_A_G2
 Práctica clase 1, desplegar un API con Docker
 
 ## Creación de archivo de configuración .env
