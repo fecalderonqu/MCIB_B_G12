@@ -35,6 +35,27 @@ def init():
 
     return response.toJSON()
 
+import math
+@app.route('/api/factorial', methods=['POST'])
+def factorial():
+    response = RespuestaProcesos()
+    logs.resetLogs()
+    try:
+        numero = int(request.args.get('numero', 1))
+        resultado = math.factorial(numero)
+        
+        response.code = 'COD_OK'
+        response.info = "Cálculo del factorial"
+        response.status = True
+        response.result = {"numero": numero, "factorial": resultado}
+        
+    except:
+        response.code = 'COD_ERR'
+        response.info = "Error al calcular el factorial"
+        response.status = False
+        
+    return response.toJSON()
+
 if __name__ == '__main__':
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT'))
