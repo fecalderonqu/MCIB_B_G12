@@ -41,7 +41,7 @@ def factorial():
     response = RespuestaProcesos()
     logs.resetLogs()
     try:
-        numero = int(request.args.get('numero', 1))
+        numero = int(request.json.get('numero', 1))
         resultado = math.factorial(numero)
         
         response.code = 'COD_OK'
@@ -56,12 +56,12 @@ def factorial():
         
     return response.toJSON()
 
-    @app.route('/invertir', methods=['POST'])
+@app.route('/invertir', methods=['POST'])
 def invertir():
     response = RespuestaProcesos()
     logs.resetLogs()
     try:
-        data = request.get_json()
+        data = request.json
         if not data or 'texto' not in data:
             response.code = 'COD_ERR'
             response.info = "No se proporcionó el texto a invertir."
@@ -84,7 +84,7 @@ def invertir():
         response.info = f"Error al invertir el texto: {str(e)}"
         response.status = False
         
-    return response
+    return response.toJSON()
 
 if __name__ == '__main__':
     host = os.getenv('HOST', '0.0.0.0')
