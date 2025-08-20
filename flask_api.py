@@ -29,6 +29,37 @@ def init():
 
     return response.toJSON()
 
+
+@app.route('/invertir', methods=['POST'])
+def invertir():
+    response = RespuestaProcesos()
+    logs.resetLogs()
+    try:
+        data = request.get_json()
+        if not data or 'texto' not in data:
+            response.code = 'COD_ERR'
+            response.info = "No se proporcionó el texto a invertir."
+            response.status = False
+            return response.toJSON()
+
+        texto = data['texto']
+        texto_invertido = texto[::-1]
+        response.code = 'COD_OK'
+        response.result = {
+            "original": texto,
+            "invertido": texto_invertido
+        }
+        response.info = "Texto invertido correctamente."
+        response.status = True
+        
+        
+    except Exception as e:
+        response.code = 'COD_ERR'
+        response.info = f"Error al invertir el texto: {str(e)}"
+        response.status = False
+        
+    return response
+
 if __name__ == '__main__':
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT'))
