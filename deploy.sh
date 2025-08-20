@@ -1,5 +1,5 @@
-NAME_CONTAINER="api-flask-grupo12"
-NAME_IMAGE="api-flask-grupo12"
+NAME_CONTAINER="api-flask-grupo2"
+NAME_IMAGE="api-flask-grupo2"
 PORT_EXPOSE=5001
 
 docker build -t "$NAME_IMAGE" .
